@@ -56,6 +56,8 @@ export const NAV: NavGroup[] = [
     items: [
       { label: "Bagan Akun", href: "/coa", permission: "COA:VIEW" },
       { label: "Jurnal Umum", href: "/jurnal", permission: "LEDGER:VIEW" },
+      { label: "Jurnal Berulang", href: "/jurnal/berulang", permission: "LEDGER:VIEW" },
+      { label: "Saldo Awal", href: "/jurnal/saldo-awal", permission: "LEDGER:POST" },
       { label: "Buku Besar", href: "/jurnal/buku-besar", permission: "LEDGER:VIEW" },
       { label: "Neraca Saldo", href: "/jurnal/neraca-saldo", permission: "LEDGER:VIEW" },
       { label: "Periode Akuntansi", href: "/jurnal/periode", permission: "PERIOD:VIEW" },

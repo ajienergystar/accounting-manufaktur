@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { Suspense, useState, type ReactNode } from "react";
 import { Menu } from "lucide-react";
 import { Sidebar } from "./sidebar";
 import { ThemeToggle } from "./theme-toggle";
@@ -19,7 +19,10 @@ export function AppShell({ children, userMenu, can = () => true }: AppShellProps
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50">
         Lewati ke konten
       </a>
-      <Sidebar open={open} onNavigate={() => setOpen(false)} can={can} />
+      {/* usePathname() di Sidebar butuh Suspense untuk route dinamis (Cache Components) */}
+      <Suspense fallback={<aside className="fixed inset-y-0 left-0 hidden w-64 bg-sidebar lg:block" aria-hidden />}>
+        <Sidebar open={open} onNavigate={() => setOpen(false)} can={can} />
+      </Suspense>
       {open && (
         <div className="fixed inset-0 z-30 bg-black/40 lg:hidden" onClick={() => setOpen(false)} aria-hidden />
       )}
