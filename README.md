@@ -77,7 +77,7 @@ cd frontend && npm run lint && npx tsc --noEmit
 | 2 | Autentikasi & RBAC | ✅ |
 | 3 | Master data & COA | ✅ |
 | 4 | Buku besar | ✅ |
-| 5 | Persediaan, pembelian & AP | ⏳ |
+| 5 | Persediaan, pembelian & AP | ✅ |
 | 6 | Produksi & akuntansi biaya | ⏳ |
 | 7 | Penjualan & AR | ⏳ |
 | 8 | Kas & bank, aset tetap, pajak, anggaran | ⏳ |

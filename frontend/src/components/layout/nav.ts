@@ -67,10 +67,13 @@ export const NAV: NavGroup[] = [
     label: "Pembelian",
     icon: ShoppingCart,
     items: [
+      { label: "Permintaan Pembelian", href: "/pembelian/pr", permission: "PURCHASE:VIEW" },
       { label: "Purchase Order", href: "/pembelian/po", permission: "PURCHASE:VIEW" },
       { label: "Penerimaan Barang", href: "/pembelian/penerimaan", permission: "PURCHASE:VIEW" },
       { label: "Faktur Pembelian", href: "/pembelian/faktur", permission: "PURCHASE:VIEW" },
+      { label: "Retur Pembelian", href: "/pembelian/retur", permission: "PURCHASE:VIEW" },
       { label: "Pembayaran Utang", href: "/pembelian/pembayaran", permission: "PURCHASE:VIEW" },
+      { label: "Umur Utang (Aging)", href: "/pembelian/aging", permission: "PURCHASE:VIEW" },
     ],
   },
   {
@@ -80,6 +83,7 @@ export const NAV: NavGroup[] = [
       { label: "Stok", href: "/persediaan", permission: "INVENTORY:VIEW" },
       { label: "Kartu Stok", href: "/persediaan/kartu-stok", permission: "INVENTORY:VIEW" },
       { label: "Penyesuaian & Transfer", href: "/persediaan/mutasi", permission: "INVENTORY:VIEW" },
+      { label: "Stock Opname", href: "/persediaan/opname", permission: "INVENTORY:VIEW" },
     ],
   },
   {

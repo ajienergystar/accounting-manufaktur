@@ -50,5 +50,6 @@ public enum AccountMappingKey {
     ASSET_DISPOSAL_GAIN_LOSS,
     ROUNDING,
     BANK_CHARGES,
-    OTHER_INCOME
+    OTHER_INCOME,
+    PURCHASE_PRICE_VARIANCE
 }
