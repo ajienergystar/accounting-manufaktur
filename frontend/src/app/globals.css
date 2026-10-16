@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #f6f7f9;
+  --surface: #ffffff;
+  --surface-muted: #f1f3f6;
+  --foreground: #0f172a;
+  --muted: #5b6474;
+  --border: #e2e5eb;
+  --primary: #0f5c4d;
+  --primary-hover: #0b4a3e;
+  --primary-soft: #e3f1ed;
+  --primary-foreground: #ffffff;
+  --danger: #b42318;
+  --danger-soft: #fdecea;
+  --warning: #b54708;
+  --warning-soft: #fef4e6;
+  --success: #067647;
+  --success-soft: #e7f6ee;
+  --info: #175cd3;
+  --info-soft: #e8f0fd;
+  --ring: #3b8a79;
+  --sidebar: #0c2a24;
+  --sidebar-foreground: #c9dcd6;
+  --sidebar-active: #134a3f;
+}
+
+.dark {
+  --background: #0b0f14;
+  --surface: #121821;
+  --surface-muted: #19212c;
+  --foreground: #e6ebf1;
+  --muted: #94a0b2;
+  --border: #253041;
+  --primary: #3fb39a;
+  --primary-hover: #57c4ac;
+  --primary-soft: #11332c;
+  --primary-foreground: #04120f;
+  --danger: #f97066;
+  --danger-soft: #3a1513;
+  --warning: #fdb022;
+  --warning-soft: #3a2a0c;
+  --success: #47cd89;
+  --success-soft: #0f2e1f;
+  --info: #84adff;
+  --info-soft: #122347;
+  --ring: #3fb39a;
+  --sidebar: #080c10;
+  --sidebar-foreground: #a8b6c6;
+  --sidebar-active: #15302a;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+  --color-ring: var(--ring);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-active: var(--sidebar-active);
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+html {
+  color-scheme: light;
+}
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+/* Angka keuangan rata kanan dengan digit sama lebar */
+.num {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+  }
+}

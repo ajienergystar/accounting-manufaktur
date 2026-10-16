@@ -1,0 +1,104 @@
+spring:
+  application:
+    name: accounting-manufaktur
+  profiles:
+    default: dev
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3306/accounting_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Jakarta&characterEncoding=UTF-8}
+    username: ${DB_USERNAME:accounting}
+    password: ${DB_PASSWORD:}
+    hikari:
+      maximum-pool-size: 10
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: Asia/Jakarta
+          batch_size: 50
+        order_inserts: true
+        order_updates: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+  jackson:
+    time-zone: Asia/Jakarta
+    serialization:
+      write-dates-as-timestamps: false
+    default-property-inclusion: non_null
+  mvc:
+    problemdetails:
+      enabled: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 20MB
+
+server:
+  port: ${SERVER_PORT:8080}
+  error:
+    include-message: always
+
+app:
+  name: Akuntansi Manufaktur
+  frontend-url: ${FRONTEND_URL:http://localhost:3000}
+  cors:
+    allowed-origins: ${CORS_ORIGINS:http://localhost:3000}
+  jwt:
+    # Ganti di production! Base64 dari minimal 32 byte acak: `openssl rand -base64 48`
+    secret: ${JWT_SECRET:ZGV2LW9ubHktc2VjcmV0LWdhbnRpLWRpLXByb2R1Y3Rpb24tYWthbi1tZW5nZ3VuYWthbi0yNTYtYml0}
+    access-token-minutes: ${JWT_ACCESS_MINUTES:15}
+    refresh-token-days: ${JWT_REFRESH_DAYS:7}
+    cookie-secure: ${COOKIE_SECURE:false}
+  security:
+    max-failed-attempts: 5
+    lock-minutes: 15
+    reset-token-minutes: 30
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: alpha
+    tags-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+logging:
+  level:
+    com.aji.accounting: INFO
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  flyway:
+    locations: classpath:db/migration,classpath:db/dev
+  jpa:
+    show-sql: false
+logging:
+  level:
+    com.aji.accounting: DEBUG
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+springdoc:
+  swagger-ui:
+    enabled: false
+  api-docs:
+    enabled: false
+app:
+  jwt:
+    cookie-secure: true

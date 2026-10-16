@@ -1,0 +1,46 @@
+# Opsional: jalankan seluruh stack dengan Docker (MySQL + backend + frontend).
+# Untuk development lokal biasa cukup MySQL dari Homebrew.
+services:
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: accounting_db
+      MYSQL_USER: accounting
+      MYSQL_PASSWORD: ${DB_PASSWORD:-accounting123}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root123}
+      TZ: Asia/Jakarta
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-time-zone=+07:00
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 10
+
+  backend:
+    build: ./backend
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:mysql://mysql:3306/accounting_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Jakarta
+      DB_USERNAME: accounting
+      DB_PASSWORD: ${DB_PASSWORD:-accounting123}
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET wajib diisi}
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev}
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build: ./frontend
+    depends_on:
+      - backend
+    environment:
+      BACKEND_URL: http://backend:8080
+    ports:
+      - "3000:3000"
+
+volumes:
+  mysql-data:
