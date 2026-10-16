@@ -75,7 +75,7 @@ cd frontend && npm run lint && npx tsc --noEmit
 |---|---|---|
 | 1 | Fondasi monorepo, konfigurasi, layout | ✅ |
 | 2 | Autentikasi & RBAC | ✅ |
-| 3 | Master data & COA | ⏳ |
+| 3 | Master data & COA | ✅ |
 | 4 | Buku besar | ⏳ |
 | 5 | Persediaan, pembelian & AP | ⏳ |
 | 6 | Produksi & akuntansi biaya | ⏳ |
