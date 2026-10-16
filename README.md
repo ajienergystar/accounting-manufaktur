@@ -74,7 +74,7 @@ cd frontend && npm run lint && npx tsc --noEmit
 | Fase | Cakupan | Status |
 |---|---|---|
 | 1 | Fondasi monorepo, konfigurasi, layout | ✅ |
-| 2 | Autentikasi & RBAC | ⏳ |
+| 2 | Autentikasi & RBAC | ✅ |
 | 3 | Master data & COA | ⏳ |
 | 4 | Buku besar | ⏳ |
 | 5 | Persediaan, pembelian & AP | ⏳ |
@@ -83,6 +83,16 @@ cd frontend && npm run lint && npx tsc --noEmit
 | 8 | Kas & bank, aset tetap, pajak, anggaran | ⏳ |
 | 9 | Laporan & dashboard | ⏳ |
 | 10 | Tutup buku, audit, hardening | ⏳ |
+
+## Autentikasi
+
+- User **pertama** yang mendaftar otomatis menjadi **Administrator** dan membuat data perusahaan.
+- Registrasi berikutnya berstatus *menunggu persetujuan*; Admin menyetujui di **Pengaturan → Pengguna** sambil memilih role.
+- Token JWT (15 menit) + refresh token rotasi (7 hari bila "Ingat saya") disimpan di cookie httpOnly `SameSite=Strict`.
+- Akun terkunci 15 menit setelah 5 kali gagal login.
+- Lupa password: link reset dicetak di log backend (`[RESET PASSWORD] ...`) selama integrasi email belum dipasang.
+
+Role bawaan: `ADMIN`, `AKUNTAN`, `PRODUKSI`, `GUDANG`, `PEMBELIAN`, `PENJUALAN`, `VIEWER`. Permission berformat `MODUL:AKSI` (contoh `LEDGER:POST`).
 
 ## Troubleshooting
 

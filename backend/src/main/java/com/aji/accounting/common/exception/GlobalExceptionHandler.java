@@ -8,6 +8,8 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -20,7 +22,6 @@ import java.util.Map;
 
 /**
  * Semua error API dikembalikan dalam format RFC 7807 (application/problem+json).
- * Handler untuk exception Spring Security ada di SecurityExceptionHandler.
  */
 @Slf4j
 @RestControllerAdvice
@@ -44,6 +45,28 @@ public class GlobalExceptionHandler {
         ProblemDetail pd = problem(HttpStatus.UNPROCESSABLE_ENTITY, "Aturan bisnis dilanggar", ex.getMessage(), req);
         pd.setProperty("code", ex.getCode());
         return pd;
+    }
+
+    @ExceptionHandler(FieldValidationException.class)
+    public ProblemDetail handleFieldValidation(FieldValidationException ex, HttpServletRequest req) {
+        ProblemDetail pd = problem(HttpStatus.BAD_REQUEST, "Validasi gagal", ex.getMessage(), req);
+        pd.setProperty("errors", ex.getErrors());
+        return pd;
+    }
+
+    @ExceptionHandler(AuthFailedException.class)
+    public ProblemDetail handleAuthFailed(AuthFailedException ex, HttpServletRequest req) {
+        return problem(HttpStatus.UNAUTHORIZED, "Autentikasi gagal", ex.getMessage(), req);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ProblemDetail handleAuthentication(AuthenticationException ex, HttpServletRequest req) {
+        return problem(HttpStatus.UNAUTHORIZED, "Belum login", "Sesi tidak valid atau sudah berakhir.", req);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ProblemDetail handleAccessDenied(AccessDeniedException ex, HttpServletRequest req) {
+        return problem(HttpStatus.FORBIDDEN, "Akses ditolak", "Anda tidak memiliki hak akses untuk aksi ini.", req);
     }
 
     @ExceptionHandler(ConflictException.class)
@@ -96,11 +119,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ProblemDetail handleGeneric(Exception ex, HttpServletRequest req) throws Exception {
-        // Biarkan exception Spring Security ditangani oleh filter chain-nya.
-        if (ex.getClass().getName().startsWith("org.springframework.security")) {
-            throw ex;
-        }
+    public ProblemDetail handleGeneric(Exception ex, HttpServletRequest req) {
         log.error("Unhandled error at {}", req.getRequestURI(), ex);
         return problem(HttpStatus.INTERNAL_SERVER_ERROR, "Terjadi kesalahan sistem",
                 "Terjadi kesalahan tak terduga. Silakan hubungi administrator.", req);

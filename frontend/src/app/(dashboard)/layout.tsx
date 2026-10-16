@@ -1,5 +1,5 @@
-import { AppShell } from "@/components/layout/app-shell";
+import { AuthenticatedShell } from "@/components/layout/authenticated-shell";
 
 export default function DashboardLayout({ children }: LayoutProps<"/">) {
-  return <AppShell>{children}</AppShell>;
+  return <AuthenticatedShell>{children}</AuthenticatedShell>;
 }

@@ -12,7 +12,8 @@ spring:
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: validate
+      # Skema 100% dikelola Flyway (src/main/resources/db/migration). Hibernate tidak mengubah skema.
+      ddl-auto: none
     properties:
       hibernate:
         jdbc:
