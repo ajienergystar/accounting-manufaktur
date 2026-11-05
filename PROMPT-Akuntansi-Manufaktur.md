@@ -1,4 +1,4 @@
-# PROMPT — Aplikasi Web Full-Stack Pembukuan Akuntansi Manufaktur
+# Aplikasi Web Full-Stack Pembukuan Akuntansi Manufaktur
 
 ## 0. Peran & Tujuan
 
